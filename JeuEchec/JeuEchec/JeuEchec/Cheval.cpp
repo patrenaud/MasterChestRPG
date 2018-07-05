@@ -9,6 +9,9 @@ Cheval::Cheval(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bCavalier.png") : IMG_Load("images/wCavalier.png");
 	Piece::m_Type = PieceType::Cheval;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 
@@ -182,4 +185,9 @@ std::vector<std::shared_ptr<Vector2>> Cheval::Move(int i, int j, const std::vect
 	}
 
 	return vec;	
+}
+
+void Cheval::CastSpell()
+{
+	Piece::CastSpell();
 }

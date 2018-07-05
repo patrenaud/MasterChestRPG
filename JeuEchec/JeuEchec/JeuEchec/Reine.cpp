@@ -7,6 +7,9 @@ Reine::Reine(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bQueen.png") : IMG_Load("images/wQueen.png");
 	Piece::m_Type = PieceType::Reine;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 Reine::~Reine()
@@ -228,4 +231,9 @@ std::vector<std::shared_ptr<Vector2>> Reine::Move(int i, int j, const std::vecto
 	}
 
 	return vec;
+}
+
+void Reine::CastSpell()
+{
+	Piece::CastSpell();
 }

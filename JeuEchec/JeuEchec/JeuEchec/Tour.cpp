@@ -7,6 +7,9 @@ Tour::Tour(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bTower.png") : IMG_Load("images/wTower.png");
 	Piece::m_Type = PieceType::Tour;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 Tour::~Tour()
@@ -119,4 +122,9 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 	}
 
 	return vec;
+}
+
+void Tour::CastSpell()
+{
+	Piece::CastSpell();
 }

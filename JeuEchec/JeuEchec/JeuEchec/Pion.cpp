@@ -6,7 +6,10 @@ Pion::Pion(bool IsBlack)
 	: Piece(IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bPion.png") : IMG_Load("images/wPion.png");
-	Piece::m_Type = PieceType::Pion;
+	m_Type = PieceType::Pion;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 
@@ -108,4 +111,9 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 	}
 
 	return vec;
+}
+
+void Pion::CastSpell()
+{
+	Piece::CastSpell();
 }

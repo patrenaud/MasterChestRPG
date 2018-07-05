@@ -8,6 +8,9 @@ Roi::Roi(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bKing.png") : IMG_Load("images/wKing.png");
 	Piece::m_Type = PieceType::Roi;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 Roi::~Roi()
@@ -181,4 +184,9 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 	}
 
 	return vec;
+}
+
+void Roi::CastSpell()
+{
+	Piece::CastSpell();
 }

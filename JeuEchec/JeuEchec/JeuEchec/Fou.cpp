@@ -8,6 +8,9 @@ Fou::Fou(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bFou.png") : IMG_Load("images/wFou.png");
 	Piece::m_Type = PieceType::Fou;
+	m_Stats.hp = 1;
+	m_Stats.armor = 1;
+	m_Stats.attack = 1;
 }
 
 
@@ -135,4 +138,9 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 	}
 	
 	return vec;
+}
+
+void Fou::CastSpell()
+{
+	Piece::CastSpell();
 }

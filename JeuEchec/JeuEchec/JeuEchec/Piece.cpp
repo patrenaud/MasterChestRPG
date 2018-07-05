@@ -6,6 +6,7 @@
 Piece::Piece(bool IsBlack)
 	: isBlack(IsBlack)
 	, canEatKing(false)
+	
 {	
 }
 
