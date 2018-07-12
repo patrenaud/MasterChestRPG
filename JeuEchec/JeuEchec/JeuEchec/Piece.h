@@ -20,12 +20,14 @@ public:
 
 	enum PieceType
 	{
+		none = -1,
 		Pion = 0,
 		Tour,
 		Cheval,
 		Reine,
 		Fou,
 		Roi
+		
 	};
 
 	Piece(bool isBlack);

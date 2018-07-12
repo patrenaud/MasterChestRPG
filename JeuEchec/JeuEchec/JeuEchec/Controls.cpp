@@ -14,8 +14,6 @@ Controls::~Controls()
 {
 }
 
-
-
 bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 {
 	//Main loop flag
