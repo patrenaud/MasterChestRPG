@@ -71,16 +71,13 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			// Need to find a Piece and it has to be the right color depending on turn
 			if (_case->GetPiece() != nullptr && _case->GetPiece()->GetColor() == !m_WhitePlaying)
 			{
-				/*if (!kingNeedToMove || (kingNeedToMove && _case->GetPiece()->GetPieceType() == Piece::Roi))
-				{*/
-					// This provides the diffrent moves the player can make with this Piece
-					availableMoves = _case->GetPiece()->Move(Pos->GetI(), Pos->GetJ(), board->GetCases());
+				// This provides the diffrent moves the player can make with this Piece
+				availableMoves = _case->GetPiece()->Move(Pos->GetI(), Pos->GetJ(), board->GetCases());
 
-					for (int i = 0; i < availableMoves.size(); i++)
-					{
-						board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(true);
-					}
-				//}
+				for (int i = 0; i < availableMoves.size(); i++)
+				{
+					board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(true);
+				}
 			}
 			else
 			{
@@ -122,34 +119,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
 							_case->GetPiece() = nullptr;
 						}
-						
-						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
-
-						/*kingNeedToMove = false;
-
-						// This cheks all the other side's object to see if the King is in danger
-						enemiesMoves = std::vector<std::vector<std::shared_ptr<Vector2>>>();
-						for (int i = 0; i < board->GetCases().size(); i++)
-						{
-							for (int j = 0; j < board->GetCases()[i].size(); j++)
-							{
-								if (board->GetCases()[i][j]->GetPiece() != nullptr)
-								{
-									// si la couleur joueur actuel n'est pas la couleur de la piece
-									if (board->GetCases()[i][j]->GetPiece()->GetColor() == m_WhitePlaying)
-									{
-										board->GetCases()[i][j]->GetPiece()->Move(i, j, board->GetCases());
-										if (board->GetCases()[i][j]->GetPiece()->GetCanEatKing())
-										{
-											kingNeedToMove = true;
-											std::cout << "KingNeedsToMove" + kingNeedToMove << std::endl;
-											board->GetCases()[i][j]->GetPiece()->SetCanEatKing(false);
-										}
-									}
-								}
-							}
-							_case->GetPiece() = nullptr;
-						}*/
+						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)						
 					}
 				}
 				_case->Reset();

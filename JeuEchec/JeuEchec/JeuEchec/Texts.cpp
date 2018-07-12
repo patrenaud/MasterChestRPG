@@ -9,13 +9,10 @@ TTF_Font* Texts::m_Font = nullptr;
 
 Texts::Texts()
 {
-	// All data is created in constructor
-
 }
 
 Texts::~Texts()
 {
-
 }
 
 void Texts::Init(SDL_Window* window)

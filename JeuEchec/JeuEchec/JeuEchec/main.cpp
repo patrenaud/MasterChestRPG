@@ -38,20 +38,10 @@ SDL_Window* gWindow = NULL;
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
 
-// Text Lib
-/*SDL_Renderer* m_renderer;
-TTF_Font* m_Font;
-SDL_Color m_TextColor;
-SDL_Rect m_TextRect;*/
-
 bool init()
 {
 	// This is for text Lib
 	Texts::Init(gWindow);
-	//m_renderer = SDL_CreateRenderer(gWindow, 0, SDL_RendererFlags::SDL_RENDERER_ACCELERATED);
-	//m_Font = TTF_OpenFont("./times.ttf", 18);
-	/*m_TextColor = { 255, 255, 255 }; // this is White
-	m_TextRect = { 810, 0, 200, 100 };*/
 	
 	//Initialization flag
 	bool success = true;
@@ -129,21 +119,8 @@ int main(int argc, char* args[])
 			// Ceci est pour render le board
 			board->Render(gScreenSurface);
 
-			Texts::DrawTexts(gScreenSurface);
 			// This is to draw the text on Runtime
-			/*std::string text = "Player Power #1: Retreat = Brings someone to its original position";
-			SDL_Surface* textSurface = TTF_RenderText_Solid(m_Font, text.c_str(), m_TextColor);
-						
-			SDL_BlitSurface(textSurface, NULL, gScreenSurface, &m_TextRect);
-			SDL_FreeSurface(textSurface);
-			*/
-			/*textSurface = TTF_RenderText_Solid(m_Font, text.c_str(), m_TextColor);
-			m_TextRect.y += 20;
-
-			SDL_BlitSurface(textSurface, NULL, gScreenSurface, &m_TextRect);
-			SDL_FreeSurface(textSurface);
-
-			m_TextRect.y -= 20;*/
+			Texts::DrawTexts(gScreenSurface);
 
 			// This is to reset game
 			if (controls->Update(board, gScreenSurface))
@@ -194,9 +171,6 @@ int main(int argc, char* args[])
 	system("pause");
 	//Free resources and close SDL
 	close();
-	
-	/*TTF_CloseFont(m_Font);
-	TTF_Quit();*/
 
 	return 0;
 }
