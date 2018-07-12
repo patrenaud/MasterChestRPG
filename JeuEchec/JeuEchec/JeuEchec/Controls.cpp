@@ -73,8 +73,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			// Need to find a Piece and it has to be the right color depending on turn
 			if (_case->GetPiece() != nullptr && _case->GetPiece()->GetColor() == !m_WhitePlaying)
 			{
-				if (!kingNeedToMove || (kingNeedToMove && _case->GetPiece()->GetPieceType() == Piece::Roi))
-				{
+				/*if (!kingNeedToMove || (kingNeedToMove && _case->GetPiece()->GetPieceType() == Piece::Roi))
+				{*/
 					// This provides the diffrent moves the player can make with this Piece
 					availableMoves = _case->GetPiece()->Move(Pos->GetI(), Pos->GetJ(), board->GetCases());
 
@@ -82,7 +82,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					{
 						board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(true);
 					}
-				}
+				//}
 			}
 			else
 			{
@@ -108,12 +108,26 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						Pos->GetJ() == availableMoves[i]->GetJ())
 					{
 						SaveMove(_case, Pos); // Saves the move in the Save.txt file
-						board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
-						_case->GetPiece() = nullptr;
 
+						std::shared_ptr<Piece> targetedPiece = board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece();
+						if (targetedPiece != nullptr)
+						{
+							_case->GetPiece()->Attack(targetedPiece);
+							if (targetedPiece->GetHP() <= 0)
+							{
+								board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
+								_case->GetPiece() = nullptr;
+							}
+						}
+						else
+						{
+							board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
+							_case->GetPiece() = nullptr;
+						}
+						
 						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
 
-						kingNeedToMove = false;
+						/*kingNeedToMove = false;
 
 						// This cheks all the other side's object to see if the King is in danger
 						enemiesMoves = std::vector<std::vector<std::shared_ptr<Vector2>>>();
@@ -137,7 +151,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 								}
 							}
 							_case->GetPiece() = nullptr;
-						}
+						}*/
 					}
 				}
 				_case->Reset();

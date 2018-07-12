@@ -4,6 +4,7 @@
 #include <vector>
 #include <SDL.h>
 #include "Vector2.h"
+#include "Board.h"
 
 class Case;
 
@@ -39,8 +40,11 @@ public:
 
 	const bool GetColor() { return isBlack; }
 	const bool GetCanEatKing() { return canEatKing; }
+	const int GetHP() { return m_Stats.hp; }
+	void SetHP(int damage);
+	void Attack(std::shared_ptr<Piece> piece);
 
-	virtual void CastSpell()
+	virtual void CastSpell(const std::shared_ptr<Board>& board)
 	{
 		canSpell = false;
 	}

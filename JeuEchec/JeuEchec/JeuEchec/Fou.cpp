@@ -20,7 +20,9 @@ Fou::~Fou()
 
 std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
 {
+	bool destination;
 	std::vector<std::shared_ptr<Vector2>>vec = {};
+
 	for (int w = 1; w < 8; w++)
 	{
 		if ((i + w) < 8 && (j + w) <= 7)
@@ -31,7 +33,7 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 			}
 			else
 			{
-				bool destination = cases[i + w][j + w]->GetPiece()->GetColor();
+				destination = cases[i + w][j + w]->GetPiece()->GetColor();
 				if (isBlack == destination)
 				{
 					break;
@@ -39,11 +41,6 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 				else if (isBlack != destination)
 				{
 					vec.push_back(std::make_shared<Vector2>(i + w, j + w, true));
-					
-					if (cases[i+w][j+w]->GetPiece()->GetPieceType() == Piece::PieceType::Roi)
-					{
-						canEatKing = true;
-					}
 					break;
 				}
 			}
@@ -60,7 +57,8 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 			}
 			else
 			{
-				bool destination = cases[i - w][j - w]->GetPiece()->GetColor();
+				destination = cases[i - w][j - w]->GetPiece()->GetColor();
+
 				if (isBlack == destination)
 				{
 					break;
@@ -68,11 +66,6 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 				else if (isBlack != destination)
 				{
 					vec.push_back(std::make_shared<Vector2>(i - w, j - w, true));
-					
-					if (cases[i - w][j - w]->GetPiece()->GetPieceType() == Piece::PieceType::Roi)
-					{
-						canEatKing = true;
-					}
 					break;
 				}
 			}
@@ -89,7 +82,8 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 			}
 			else
 			{
-				bool destination = cases[i - w][j + w]->GetPiece()->GetColor();
+				destination = cases[i - w][j + w]->GetPiece()->GetColor();
+
 				if (isBlack == destination)
 				{
 					break;
@@ -97,11 +91,6 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 				else if (isBlack != destination)
 				{
 					vec.push_back(std::make_shared<Vector2>(i - w, j + w, true));
-					
-					if (cases[i - w][j + w]->GetPiece()->GetPieceType() == Piece::PieceType::Roi)
-					{
-						canEatKing = true;
-					}
 					break;
 				}
 			}
@@ -118,7 +107,8 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 			}
 			else
 			{
-				bool destination = cases[i + w][j - w]->GetPiece()->GetColor();
+				destination = cases[i + w][j - w]->GetPiece()->GetColor();
+
 				if (isBlack == destination)
 				{
 					break;
@@ -126,11 +116,6 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 				else if (isBlack != destination)
 				{
 					vec.push_back(std::make_shared<Vector2>(i + w, j - w, true));
-					
-					if (cases[i + w][j - w]->GetPiece()->GetPieceType() == Piece::PieceType::Roi)
-					{
-						canEatKing = true;
-					}
 					break;
 				}
 			}
@@ -140,7 +125,7 @@ std::vector<std::shared_ptr<Vector2>> Fou::Move(int i, int j, const std::vector<
 	return vec;
 }
 
-void Fou::CastSpell()
+void Fou::CastSpell(const std::shared_ptr<Board>& board)
 {
-	Piece::CastSpell();
+	Piece::CastSpell(board);
 }

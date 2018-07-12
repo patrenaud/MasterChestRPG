@@ -14,7 +14,7 @@ public:
 	Controls();
 	~Controls();
 
-	const bool GetKingToMove() { return kingNeedToMove; }
+	//const bool GetKingToMove() { return kingNeedToMove; }
 	bool m_WhitePlaying = true;
 
 	bool Update(const std::shared_ptr<Board>& board, SDL_Surface* screen);
