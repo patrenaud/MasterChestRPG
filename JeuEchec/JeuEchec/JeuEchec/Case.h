@@ -3,13 +3,14 @@
 #include <SDL_image.h>
 #include <memory>
 #include "Vector2.h"
+#include "Piece.h"
 
 class Piece;
 
 class Case
 {
 public:
-	Case(const int x, const int y, std::shared_ptr<Piece> aPiece = nullptr);
+	Case(const int x, const int y, Piece::PieceType a_PieceType = Piece::PieceType::none, const bool is_Black = false);
 	~Case();
 
 	SDL_Rect& GetRect() { return gCase; }

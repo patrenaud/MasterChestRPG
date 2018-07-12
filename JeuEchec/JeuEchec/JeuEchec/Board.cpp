@@ -3,13 +3,8 @@
 #include <stdio.h>
 #include <string>
 #include <memory>
+#include "PieceFactory.h"
 #include "Case.h"
-#include "Pion.h"
-#include "Tour.h"
-#include "Cheval.h"
-#include "Fou.h"
-#include "Reine.h"
-#include "Roi.h"
 
 Board::Board()
 {
@@ -30,55 +25,55 @@ Board::Board()
 			{
 				if (j == 0 || j == 7)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Tour>(false)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Tour, false));
 				}														 
 				else if (j == 1 || j == 6)								 
 				{														 
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Cheval>(false)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Cheval, false));
 				}														 
 				else if (j == 2 || j == 5)								 
 				{														 
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Fou>(false)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Fou, false));
 				}														 
 				else if (j == 3)										 
 				{														 
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Reine>(false)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Reine, false));
 				}														 
 				else if (j == 4)										 
 				{														 
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Roi>(false)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Roi, false));
 				}
 			}
 			else if (i == 1)
 			{
-				gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Pion>(false)));
+				gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Pion, false));
 			}
 			else if (i== 7)
 			{
 				if (j == 0 || j == 7)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Tour>(true)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Tour, true));
 				}
 				else if (j == 1 || j == 6)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Cheval>(true)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Cheval, true));
 				}
 				else if (j == 2 || j == 5)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Fou>(true)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Fou, true));
 				}
 				else if (j == 3)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Reine>(true)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Reine, true));
 				}
 				else if (j == 4)
 				{
-					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Roi>(true)));
+					gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Roi, true));
 				}
 			}
 			else if (i == 6)
 			{
-				gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, std::make_shared<Pion>(true)));
+				gCase[i].push_back(std::make_shared<Case>(gBoard.x + 100 * j, gBoard.y + 100 * i, Piece::PieceType::Pion, true));
 			}
 			else
 			{
