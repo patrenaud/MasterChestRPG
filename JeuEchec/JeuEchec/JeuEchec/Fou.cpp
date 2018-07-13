@@ -8,7 +8,7 @@ Fou::Fou(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bFou.png") : IMG_Load("images/wFou.png");
 	Piece::m_Type = PieceType::Fou;
-	m_Stats.hp = 1;
+	m_Stats.hp = 3;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
 }

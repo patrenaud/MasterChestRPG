@@ -35,14 +35,17 @@ public:
 	~Piece();
 
 	void Render(SDL_Surface* gScreenSurface, SDL_Rect* Rect);
-	void SetCanEatKing(const bool canEat) { canEatKing = canEat; }
+
 
 	SDL_Surface* m_Texture;
 	const PieceType GetPieceType() { return m_Type; }
 
 	const bool GetColor() { return isBlack; }
-	const bool GetCanEatKing() { return canEatKing; }
+
 	const int GetHP() { return m_Stats.hp; }
+	const int GetDamage() { return m_Stats.attack; }
+	const int GetArmor() { return m_Stats.armor; }
+
 	void SetHP(int damage);
 	void Attack(std::shared_ptr<Piece> piece);
 
@@ -61,7 +64,7 @@ private:
 
 protected:
 
-	bool canEatKing;
+
 	bool isBlack;
 	PieceType m_Type;
 	Stats m_Stats;

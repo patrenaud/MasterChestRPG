@@ -7,7 +7,7 @@ Tour::Tour(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bTower.png") : IMG_Load("images/wTower.png");
 	Piece::m_Type = PieceType::Tour;
-	m_Stats.hp = 1;
+	m_Stats.hp = 42;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
 }

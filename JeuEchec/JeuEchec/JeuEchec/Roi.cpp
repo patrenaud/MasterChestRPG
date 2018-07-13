@@ -8,7 +8,7 @@ Roi::Roi(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bKing.png") : IMG_Load("images/wKing.png");
 	Piece::m_Type = PieceType::Roi;
-	m_Stats.hp = 1;
+	m_Stats.hp = 13;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
 }

@@ -9,9 +9,9 @@ Cheval::Cheval(bool IsBlack)
 {
 	m_Texture = IsBlack ? IMG_Load("images/bCavalier.png") : IMG_Load("images/wCavalier.png");
 	Piece::m_Type = PieceType::Cheval;
-	m_Stats.hp = 1;
-	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.hp = 2;
+	m_Stats.armor = 2;
+	m_Stats.attack = 2;
 }
 
 

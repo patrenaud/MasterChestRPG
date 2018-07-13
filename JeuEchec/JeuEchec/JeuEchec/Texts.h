@@ -10,12 +10,12 @@ static class Texts
 public:
 	enum ETextType
 	{
-		Hp = 9,
-		Damage = 10,
-		Armor = 11,
-		Power = 12,
-		Plaer1 = 16,
-		Player2 = 17
+		Hp = 8,
+		Damage = 9,
+		Armor = 10,
+		Power = 11,
+		Plaer1 = 15,
+		Player2 = 16
 
 	};
 	static struct TextData

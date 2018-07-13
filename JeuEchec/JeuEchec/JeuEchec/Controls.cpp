@@ -5,8 +5,10 @@
 #include "Vector2.h"
 #include "Roi.h"
 #include <fstream>
+#include <string>
 
 Controls::Controls()
+	: m_ControlState(EControlState::ATTACK_PHASE)
 {
 }
 
@@ -37,6 +39,17 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				std::cout << "Restart Game" << std::endl;
 				return true;
 			}
+
+			if (e.key.keysym.sym == SDLK_x && _case == nullptr)
+			{
+				//*****************************************************************************
+				// Trouve la Pos
+				// Il y a une Piece ??
+				// Trouve le type de Piece
+				// Le Spell est disponible ??
+
+				// SPELL PHASE
+			}
 		}
 
 		//User requests quit
@@ -57,10 +70,34 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				_case->GetRect().x = x - 50;
 				_case->GetRect().y = y - 50;
 			}
+			//******************************************************************
+			std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+			
+			if (x > 0 && x < 800 && y < 800 && y > 0)
+			{
+				m_MouseSensor = board->GetCase(Pos->GetJ(), Pos->GetI());
+				if (m_MouseSensor->GetPiece())
+				{
+					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: " + std::to_string(m_MouseSensor->GetPiece()->GetHP());
+					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: " + std::to_string(m_MouseSensor->GetPiece()->GetDamage());
+					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: " + std::to_string(m_MouseSensor->GetPiece()->GetArmor());
+				}
+				else
+				{
+					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: ";
+					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: ";
+					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: ";
+				}
+			}
+			// Est-ce qu'il y a une piece?
+			// Si oui, Chercher les stats
+			// m_Texts = Stats
 		}
 
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
+			// CASE ATTACK
+
 			int x = 0;
 			int y = 0;
 			SDL_GetMouseState(&y, &x);
@@ -83,6 +120,25 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			{
 				_case = nullptr;
 			}
+
+			//********************************************************************************************
+			// CASE SPELL
+			{
+				// Trouver les positions pour le type de piece effectuant le spell
+
+				// Si un Roi, tatata
+				// Si une Reine, blablabla
+				// etc.
+
+
+				// Trouver si l'utilisation du spell de la piece selectionne est valide
+				// Si OUI --- Cast Spell()  ET  CanSPell = false
+				// Si OUI ou NON ----- STATE == ATTACK
+				// 
+
+			}
+
+
 		}
 		else if (e.type == SDL_MOUSEBUTTONUP)
 		{

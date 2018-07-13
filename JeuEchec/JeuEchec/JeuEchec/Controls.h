@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <vector>
+#include "Texts.h"
 
 class Vector2;
 class Board;
@@ -11,6 +12,13 @@ class Case;
 class Controls
 {
 public:
+
+	enum EControlState
+	{
+		ATTACK_PHASE,
+		SPELL_PHASE
+	};	
+
 	Controls();
 	~Controls();
 
@@ -24,6 +32,8 @@ public:
 
 private:
 	std::shared_ptr<Case> _case = nullptr;
+	std::shared_ptr<Case> m_MouseSensor = nullptr;
+	EControlState m_ControlState;
 
 protected:
 	bool kingNeedToMove = false;
