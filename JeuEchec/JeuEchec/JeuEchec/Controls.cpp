@@ -42,6 +42,35 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 			if (e.key.keysym.sym == SDLK_x && _case == nullptr)
 			{
+				int x = 0;
+				int y = 0;
+				SDL_GetMouseState(&x, &y);
+				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+
+
+				/*std::cout << "Color: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetColor()).c_str() << std::endl;
+				std::cout << "CanSpell?: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetCanSpell()).c_str() << std::endl;*/
+
+				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
+				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece() != nullptr && 
+					board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetColor() == !m_WhitePlaying &&
+					board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetCanSpell() == true)
+				{
+					//std::cout << Pos->GetJ() + " " + Pos->GetI() << std::endl;
+					availableSpellDest = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->SpellTarget(Pos->GetJ(), Pos->GetI(), board->GetCases());
+					for (int i = 0; i < 8; i++)
+					{
+						for (int j = 0; j < 8; j++)
+						{
+							board->GetCase(i, j)->SetHighlight(false);
+						}
+					}
+
+					for (int i = 0; i < availableSpellDest.size(); i++)
+					{
+						board->GetCase(availableSpellDest[i]->GetI(), availableSpellDest[i]->GetJ())->SetHighlight(true);
+					}
+				}
 				//*****************************************************************************
 				// Trouve la Pos
 				// Il y a une Piece ??

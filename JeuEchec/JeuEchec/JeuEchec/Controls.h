@@ -36,7 +36,8 @@ private:
 	EControlState m_ControlState;
 
 protected:
-	bool kingNeedToMove = false;
 	std::vector<std::shared_ptr<Vector2>> availableMoves = std::vector<std::shared_ptr<Vector2>>();
+	std::vector<std::shared_ptr<Vector2>> availableSpellDest = std::vector<std::shared_ptr<Vector2>>();
+
 };
 
