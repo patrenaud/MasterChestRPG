@@ -10,9 +10,8 @@ Fou::Fou(bool IsBlack)
 	Piece::m_Type = PieceType::Fou;
 	m_Stats.hp = 3;
 	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.attack = 2;
 }
-
 
 Fou::~Fou()
 {
