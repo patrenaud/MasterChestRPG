@@ -26,8 +26,7 @@ public:
 		Cheval,
 		Reine,
 		Fou,
-		Roi
-		
+		Roi		
 	};
 
 	Piece(bool isBlack);
@@ -49,7 +48,7 @@ public:
 	void SetHP(int damage);
 	void Attack(std::shared_ptr<Piece> piece);
 
-	virtual void CastSpell(const std::shared_ptr<Board>& board)
+	virtual void CastSpell(const std::shared_ptr<Board>& board, const std::shared_ptr<Case>& aCase)
 	{
 		canSpell = false;
 	}

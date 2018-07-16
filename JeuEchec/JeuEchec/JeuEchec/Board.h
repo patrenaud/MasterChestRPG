@@ -17,6 +17,7 @@ public:
 	void Render(SDL_Surface* gScreenSurface);
 	std::shared_ptr<Case> GetCase(int i, int j) {return gCase[i][j]; }	
 	const std::vector<std::vector<std::shared_ptr<Case>>> &GetCases() { return gCase; }
+	void SetHighlightFalse();
 
 private:
 

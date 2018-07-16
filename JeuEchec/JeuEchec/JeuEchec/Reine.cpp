@@ -232,7 +232,7 @@ std::vector<std::shared_ptr<Vector2>> Reine::SpellTarget(int i, int j, const std
 	return vec;
 }
 
-void Reine::CastSpell(const std::shared_ptr<Board>& board)
+void Reine::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
-	Piece::CastSpell(board);
+	Piece::CastSpell(aBoard, aCase);
 }
