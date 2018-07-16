@@ -10,6 +10,7 @@ Reine::Reine(bool IsBlack)
 	m_Stats.hp = 4;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	m_SpellText = "Boost morale: Raises an ally's attack power";
 }
 
 Reine::~Reine()

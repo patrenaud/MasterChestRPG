@@ -110,12 +110,16 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: " + std::to_string(m_MouseSensor->GetPiece()->GetHP());
 					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: " + std::to_string(m_MouseSensor->GetPiece()->GetDamage());
 					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: " + std::to_string(m_MouseSensor->GetPiece()->GetArmor());
+					Texts::m_Texts[Texts::ETextType::PowerText].text = m_MouseSensor->GetPiece()->GetSpellText();
+					Texts::m_Texts[Texts::ETextType::Power].text = m_MouseSensor->GetPiece()->GetCanSpell() ? "Power: Available" : "Power: Unvailable";
 				}
 				else
 				{
 					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: ";
 					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: ";
 					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: ";
+					Texts::m_Texts[Texts::ETextType::Power].text = "";
+					Texts::m_Texts[Texts::ETextType::PowerText].text = "";
 				}
 			}
 			// Est-ce qu'il y a une piece?
@@ -125,7 +129,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
-			// CASE ATTACK
+			// State ATTACK
 
 			int x = 0;
 			int y = 0;
@@ -151,7 +155,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			}
 
 			//********************************************************************************************
-			// CASE SPELL
+			// STATE SPELL
 			{
 				// Trouver les positions pour le type de piece effectuant le spell
 
@@ -204,7 +208,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
 							_case->GetPiece() = nullptr;
 						}
-						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)						
+						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
 					}
 				}
 				_case->Reset();

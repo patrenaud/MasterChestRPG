@@ -12,6 +12,7 @@ Cheval::Cheval(bool IsBlack)
 	m_Stats.hp = 2;
 	m_Stats.armor = 2;
 	m_Stats.attack = 2;
+	m_SpellText = "Stampede: Damages all enemy around the landing area (friendly or enemy)";
 }
 
 

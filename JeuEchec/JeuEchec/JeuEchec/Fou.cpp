@@ -11,6 +11,7 @@ Fou::Fou(bool IsBlack)
 	m_Stats.hp = 3;
 	m_Stats.armor = 1;
 	m_Stats.attack = 2;
+	m_SpellText = "Allahu Akbar!: Kills an enemy unit with yourself";
 }
 
 Fou::~Fou()

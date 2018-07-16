@@ -10,6 +10,7 @@ Tour::Tour(bool IsBlack)
 	m_Stats.hp = 42;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	m_SpellText = "Sniper: Deals damage to any enemy on the map";
 }
 
 Tour::~Tour()

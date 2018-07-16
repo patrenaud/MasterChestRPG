@@ -10,6 +10,7 @@ Pion::Pion(bool IsBlack)
 	m_Stats.hp = 1;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	m_SpellText = "Switcharoo: Swaps position with an adjacent unit (friendly or enemy)";
 }
 
 

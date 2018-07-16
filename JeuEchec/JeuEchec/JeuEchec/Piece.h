@@ -36,6 +36,7 @@ public:
 
 	void Render(SDL_Surface* gScreenSurface, SDL_Rect* Rect);
 
+
 	SDL_Surface* m_Texture;
 	const PieceType GetPieceType() { return m_Type; }
 
@@ -45,6 +46,7 @@ public:
 	const int GetDamage() { return m_Stats.attack; }
 	const int GetArmor() { return m_Stats.armor; }
 	const bool GetCanSpell() { return canSpell; }
+	const std::string GetSpellText() { return m_SpellText; }
 
 	void SetHP(int damage);
 	void Attack(std::shared_ptr<Piece> piece);
@@ -71,5 +73,6 @@ protected:
 	bool isBlack;
 	PieceType m_Type;
 	Stats m_Stats;
+	std::string m_SpellText;
 };
 

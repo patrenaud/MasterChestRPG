@@ -4,7 +4,7 @@
 
 static class Texts
 {
-	
+
 
 
 public:
@@ -14,16 +14,17 @@ public:
 		Damage = 9,
 		Armor = 10,
 		Power = 11,
-		Plaer1 = 15,
+		PowerText = 12,
+		Player1 = 15,
 		Player2 = 16
 
 	};
-	static struct TextData
+	struct TextData
 	{
 		SDL_Color color;
 		SDL_Rect rect;
 		std::string text;
-		TextData(std::string aText) 
+		TextData(std::string aText)
 		{
 			text = aText;
 		}
@@ -39,8 +40,8 @@ public:
 	static void CreateColors();
 	static void DrawTexts(SDL_Surface* surface);
 
-private:	
-		
+private:
+
 	void Destroy();
 	static TTF_Font* m_Font;
 	static SDL_Renderer* m_renderer;

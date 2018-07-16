@@ -11,6 +11,7 @@ Roi::Roi(bool IsBlack)
 	m_Stats.hp = 13;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	m_SpellText = "Healer: Heals an ally to max health";
 }
 
 Roi::~Roi()
