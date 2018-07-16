@@ -229,4 +229,3 @@ void Controls::SaveMove(std::shared_ptr<Case> _case, std::shared_ptr<Vector2> Po
 
 	SaveGame.close();
 }
-

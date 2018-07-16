@@ -129,6 +129,7 @@
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="PieceFactory.cpp" />
     <ClCompile Include="Pion.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Reine.cpp" />
     <ClCompile Include="Roi.cpp" />
     <ClCompile Include="Texts.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Piece.h" />
     <ClInclude Include="PieceFactory.h" />
     <ClInclude Include="Pion.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Reine.h" />
     <ClInclude Include="Roi.h" />
     <ClInclude Include="Texts.h" />

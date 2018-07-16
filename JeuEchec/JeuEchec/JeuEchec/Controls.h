@@ -4,10 +4,12 @@
 #include <SDL.h>
 #include <vector>
 #include "Texts.h"
+#include "Player.h"
 
 class Vector2;
 class Board;
 class Case;
+class Player;
 
 class Controls
 {
@@ -29,6 +31,8 @@ public:
 	void SaveMove(std::shared_ptr<Case> _case, std::shared_ptr<Vector2> Pos);
 
 	const std::shared_ptr<Case> &GetCurrentCase() { return _case; }
+	Player* m_WhitePlayer;
+	Player* m_BlackPlayer;
 
 private:
 	std::shared_ptr<Case> _case = nullptr;
