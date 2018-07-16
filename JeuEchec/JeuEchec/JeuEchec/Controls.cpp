@@ -20,6 +20,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 {
 	//Main loop flag
 	bool quit = false;
+	
 
 	//Event handler
 	SDL_Event e;
@@ -34,42 +35,55 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 	{
 		if (e.type == SDL_KEYDOWN)
 		{
+			board->SetHighlightFalse();
+
 			if (e.key.keysym.sym == SDLK_SPACE)
 			{
 				std::cout << "Restart Game" << std::endl;
 				return true;
 			}
 
-			if (e.key.keysym.sym == SDLK_x && _case == nullptr)
+			if (e.key.keysym.sym == SDLK_x)
 			{
-				int x = 0;
-				int y = 0;
-				SDL_GetMouseState(&x, &y);
-				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
-
-
-				/*std::cout << "Color: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetColor()).c_str() << std::endl;
-				std::cout << "CanSpell?: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetCanSpell()).c_str() << std::endl;*/
-
-				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
-				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece() != nullptr && 
-					board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetColor() == !m_WhitePlaying &&
-					board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetCanSpell() == true)
+				_case = nullptr;
+				board->SetHighlightFalse();
+				if (m_ControlState == ATTACK_PHASE)
 				{
-					//std::cout << Pos->GetJ() + " " + Pos->GetI() << std::endl;
-					availableSpellDest = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->SpellTarget(Pos->GetJ(), Pos->GetI(), board->GetCases());
-					for (int i = 0; i < 8; i++)
+					int x = 0;
+					int y = 0;
+					SDL_GetMouseState(&x, &y);
+					std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+
+
+					/*std::cout << "Color: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetColor()).c_str() << std::endl;
+					std::cout << "CanSpell?: " + (board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->GetCanSpell()).c_str() << std::endl;*/
+
+					std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
+
+					if (currentPiece != nullptr &&
+						currentPiece->GetColor() == !m_WhitePlaying &&
+						currentPiece->GetCanSpell() == true)
 					{
-						for (int j = 0; j < 8; j++)
+						_case = board->GetCase(Pos->GetJ(), Pos->GetI());
+						//std::cout << Pos->GetJ() + " " + Pos->GetI() << std::endl;
+						availableSpellDest = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->SpellTarget(Pos->GetJ(), Pos->GetI(), board->GetCases());
+
+						if (availableSpellDest.size() > 0)
 						{
-							board->GetCase(i, j)->SetHighlight(false);
+							for (int i = 0; i < availableSpellDest.size(); i++)
+							{
+								board->GetCase(availableSpellDest[i]->GetI(), availableSpellDest[i]->GetJ())->SetHighlight(true);
+							}
+
+							m_ControlState = SPELL_PHASE;
 						}
 					}
+					// STATE == Spell si il y a des mouvements dispo
+				}
+				else if (m_ControlState == SPELL_PHASE)
+				{
 
-					for (int i = 0; i < availableSpellDest.size(); i++)
-					{
-						board->GetCase(availableSpellDest[i]->GetI(), availableSpellDest[i]->GetJ())->SetHighlight(true);
-					}
+					m_ControlState = ATTACK_PHASE;
 				}
 				//*****************************************************************************
 				// Trouve la Pos
@@ -94,14 +108,14 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			int y = 0;
 			SDL_GetMouseState(&x, &y);
 
-			if (_case != nullptr)
+			if (_case != nullptr && m_ControlState != SPELL_PHASE)
 			{
 				_case->GetRect().x = x - 50;
 				_case->GetRect().y = y - 50;
 			}
 			//******************************************************************
 			std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
-			
+
 			if (x > 0 && x < 800 && y < 800 && y > 0)
 			{
 				m_MouseSensor = board->GetCase(Pos->GetJ(), Pos->GetI());
@@ -129,34 +143,57 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
-			// State ATTACK
-
-			int x = 0;
-			int y = 0;
-			SDL_GetMouseState(&y, &x);
-			std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
-
-			_case = board->GetCase(Pos->GetI(), Pos->GetJ());
-
-			// Need to find a Piece and it has to be the right color depending on turn
-			if (_case->GetPiece() != nullptr && _case->GetPiece()->GetColor() == !m_WhitePlaying)
+			
+			
+			// CASE ATTACK
+			if (m_ControlState == ATTACK_PHASE)
 			{
-				// This provides the diffrent moves the player can make with this Piece
-				availableMoves = _case->GetPiece()->Move(Pos->GetI(), Pos->GetJ(), board->GetCases());
+				int x = 0;
+				int y = 0;
+				SDL_GetMouseState(&y, &x);
+				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
 
-				for (int i = 0; i < availableMoves.size(); i++)
+				_case = board->GetCase(Pos->GetI(), Pos->GetJ());
+
+				// Need to find a Piece and it has to be the right color depending on turn
+				if (_case->GetPiece() != nullptr && _case->GetPiece()->GetColor() == !m_WhitePlaying)
 				{
-					board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(true);
+					// This provides the diffrent moves the player can make with this Piece
+					availableMoves = _case->GetPiece()->Move(Pos->GetI(), Pos->GetJ(), board->GetCases());
+
+					for (int i = 0; i < availableMoves.size(); i++)
+					{
+						board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(true);
+					}
 				}
-			}
-			else
-			{
-				_case = nullptr;
+				else
+				{
+					_case = nullptr;
+				}
 			}
 
 			//********************************************************************************************
 			// STATE SPELL
+			else if (m_ControlState == SPELL_PHASE)
 			{
+				int x = 0;
+				int y = 0;
+				SDL_GetMouseState(&y, &x);
+				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+
+				const bool isHighlight = board->GetCase(Pos->GetI(), Pos->GetJ())->GetHighlight();
+
+				if (isHighlight == true)
+				{
+					_case->GetPiece()->CastSpell(board, _case);
+				}
+				else
+				{
+					m_ControlState = ATTACK_PHASE;
+				}
+
+				board->SetHighlightFalse();
+				_case = nullptr;
 				// Trouver les positions pour le type de piece effectuant le spell
 
 				// Si un Roi, tatata
@@ -168,51 +205,48 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				// Si OUI --- Cast Spell()  ET  CanSPell = false
 				// Si OUI ou NON ----- STATE == ATTACK
 				// 
-
 			}
-
-
 		}
 		else if (e.type == SDL_MOUSEBUTTONUP)
 		{
-			if (_case != nullptr)
+			board->SetHighlightFalse();
+			if (m_ControlState == ATTACK_PHASE)
 			{
-				int x = 0;
-				int y = 0;
-				SDL_GetMouseState(&y, &x);
-				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
-				for (int i = 0; i < availableMoves.size(); i++)
+				if (_case != nullptr)
 				{
+					int x = 0;
+					int y = 0;
+					SDL_GetMouseState(&y, &x);
+					std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
 					for (int i = 0; i < availableMoves.size(); i++)
 					{
-						board->GetCase(availableMoves[i]->GetI(), availableMoves[i]->GetJ())->SetHighlight(false);
-					}
 
-					if (Pos->GetI() == availableMoves[i]->GetI() &&
-						Pos->GetJ() == availableMoves[i]->GetJ())
-					{
-						SaveMove(_case, Pos); // Saves the move in the Save.txt file
-
-						std::shared_ptr<Piece> targetedPiece = board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece();
-						if (targetedPiece != nullptr)
+						if (Pos->GetI() == availableMoves[i]->GetI() &&
+							Pos->GetJ() == availableMoves[i]->GetJ())
 						{
-							_case->GetPiece()->Attack(targetedPiece);
-							if (targetedPiece->GetHP() <= 0)
+							SaveMove(_case, Pos); // Saves the move in the Save.txt file
+
+							std::shared_ptr<Piece> targetedPiece = board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece();
+							if (targetedPiece != nullptr)
+							{
+								_case->GetPiece()->Attack(targetedPiece);
+								if (targetedPiece->GetHP() <= 0)
+								{
+									board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
+									_case->GetPiece() = nullptr;
+								}
+							}
+							else
 							{
 								board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
 								_case->GetPiece() = nullptr;
 							}
+							m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)						
 						}
-						else
-						{
-							board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
-							_case->GetPiece() = nullptr;
-						}
-						m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
 					}
+					_case->Reset();
+					_case = nullptr;
 				}
-				_case->Reset();
-				_case = nullptr;
 			}
 		}
 	}

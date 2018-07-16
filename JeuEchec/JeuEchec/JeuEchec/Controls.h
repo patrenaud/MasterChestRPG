@@ -35,6 +35,7 @@ public:
 	Player* m_BlackPlayer;
 
 private:
+	std::shared_ptr<Piece> _PlayingPiece = nullptr;
 	std::shared_ptr<Case> _case = nullptr;
 	std::shared_ptr<Case> m_MouseSensor = nullptr;
 	EControlState m_ControlState;
