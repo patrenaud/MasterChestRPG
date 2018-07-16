@@ -22,7 +22,6 @@ Cheval::~Cheval()
 std::vector<std::shared_ptr<Vector2>> Cheval::Move(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
 {
 	bool destination;
-	bool canEatKing;
 	std::vector<std::shared_ptr<Vector2>>vec = {};
 
 	if (i >= 2 && j <= 6)
@@ -122,6 +121,77 @@ std::vector<std::shared_ptr<Vector2>> Cheval::Move(int i, int j, const std::vect
 	}
 
 	return vec;	
+}
+
+std::vector<std::shared_ptr<Vector2>> Cheval::SpellTarget(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
+{
+	std::vector<std::shared_ptr<Vector2>>vec = {};
+
+	if (i >= 2 && j <= 6)
+	{
+		if (cases[i - 2][j + 1]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i - 2, j + 1, true));
+		}
+	}
+
+	if (i >= 2 && j >= 1)
+	{
+		if (cases[i - 2][j - 1]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i - 2, j - 1, true));
+		}
+	}
+
+	if (i >= 1 && j >= 2)
+	{
+		if (cases[i - 1][j - 2]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i - 1, j - 2, true));
+		}
+	}
+
+	if (i <= 6 && j >= 2)
+	{
+		if (cases[i + 1][j - 2]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i + 1, j - 2, true));
+		}
+	}
+
+	if (i <= 5 && j >= 1)
+	{
+		if (cases[i + 2][j - 1]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i + 2, j - 1, true));
+		}
+	}
+
+	if (i <= 5 && j <= 6)
+	{
+		if (cases[i + 2][j + 1]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i + 2, j + 1, true));
+		}
+	}
+
+	if (i <= 6 && j <= 5)
+	{
+		if (cases[i + 1][j + 2]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i + 1, j + 2, true));
+		}
+	}
+
+	if (i >= 1 && j <= 5)
+	{
+		if (cases[i - 1][j + 2]->GetPiece() == nullptr)
+		{
+			vec.push_back(std::make_shared<Vector2>(i - 1, j + 2, true));
+		}
+	}
+
+	return vec;
 }
 
 void Cheval::CastSpell(const std::shared_ptr<Board>& board)

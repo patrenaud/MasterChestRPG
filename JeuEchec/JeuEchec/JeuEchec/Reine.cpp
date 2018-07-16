@@ -209,6 +209,29 @@ std::vector<std::shared_ptr<Vector2>> Reine::Move(int i, int j, const std::vecto
 	return vec;
 }
 
+std::vector<std::shared_ptr<Vector2>> Reine::SpellTarget(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
+{
+	std::vector<std::shared_ptr<Vector2>>vec = {};
+	bool destination;
+
+	for (int w = 0; w < 8; w++)
+	{
+		for (int z = 0; z < 8; z++)
+		{
+			if (cases[w][z]->GetPiece() != nullptr)
+			{
+				destination = cases[w][z]->GetPiece()->GetColor();
+				if (isBlack == destination)
+				{
+					vec.push_back(std::make_shared<Vector2>(w, z, true));
+				}
+			}
+		}
+	}
+
+	return vec;
+}
+
 void Reine::CastSpell(const std::shared_ptr<Board>& board)
 {
 	Piece::CastSpell(board);

@@ -36,7 +36,6 @@ public:
 
 	void Render(SDL_Surface* gScreenSurface, SDL_Rect* Rect);
 
-
 	SDL_Surface* m_Texture;
 	const PieceType GetPieceType() { return m_Type; }
 
@@ -45,6 +44,7 @@ public:
 	const int GetHP() { return m_Stats.hp; }
 	const int GetDamage() { return m_Stats.attack; }
 	const int GetArmor() { return m_Stats.armor; }
+	const bool GetCanSpell() { return canSpell; }
 
 	void SetHP(int damage);
 	void Attack(std::shared_ptr<Piece> piece);
@@ -59,12 +59,15 @@ public:
 		return std::vector<std::shared_ptr<Vector2>>();
 	}
 
+	virtual std::vector<std::shared_ptr<Vector2>> SpellTarget(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
+	{
+		return std::vector<std::shared_ptr<Vector2>>();
+	}
+
 private:
-	bool canSpell;
+	bool canSpell = true;
 
 protected:
-
-
 	bool isBlack;
 	PieceType m_Type;
 	Stats m_Stats;
