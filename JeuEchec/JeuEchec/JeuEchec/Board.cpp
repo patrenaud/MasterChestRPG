@@ -103,3 +103,14 @@ void Board::Render(SDL_Surface* gScreenSurface)
 		}
 	}
 }
+
+void Board::SetHighlightFalse()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			gCase[i][j]->SetHighlight(false);
+		}
+	}
+}

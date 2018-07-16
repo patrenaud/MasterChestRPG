@@ -31,6 +31,7 @@ public:
 	const std::shared_ptr<Case> &GetCurrentCase() { return _case; }
 
 private:
+	std::shared_ptr<Piece> _PlayingPiece = nullptr;
 	std::shared_ptr<Case> _case = nullptr;
 	std::shared_ptr<Case> m_MouseSensor = nullptr;
 	EControlState m_ControlState;
