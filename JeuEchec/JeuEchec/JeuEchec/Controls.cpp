@@ -143,8 +143,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
-			board->SetHighlightFalse();
-			_case = nullptr;
+			
+			
 			// CASE ATTACK
 			if (m_ControlState == ATTACK_PHASE)
 			{
@@ -178,15 +178,22 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			{
 				int x = 0;
 				int y = 0;
-				SDL_GetMouseState(&x, &y);
+				SDL_GetMouseState(&y, &x);
 				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
 
-				bool isHighlight = board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight();
+				const bool isHighlight = board->GetCase(Pos->GetI(), Pos->GetJ())->GetHighlight();
 
 				if (isHighlight == true)
 				{
-					board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->CastSpell(board, board->GetCase(Pos->GetJ(), Pos->GetI()));
+					_case->GetPiece()->CastSpell(board, _case);
 				}
+				else
+				{
+					m_ControlState = ATTACK_PHASE;
+				}
+
+				board->SetHighlightFalse();
+				_case = nullptr;
 				// Trouver les positions pour le type de piece effectuant le spell
 
 				// Si un Roi, tatata
@@ -198,10 +205,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				// Si OUI --- Cast Spell()  ET  CanSPell = false
 				// Si OUI ou NON ----- STATE == ATTACK
 				// 
-
 			}
-
-
 		}
 		else if (e.type == SDL_MOUSEBUTTONUP)
 		{

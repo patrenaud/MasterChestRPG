@@ -13,7 +13,7 @@ public:
 	Case(const int x, const int y, Piece::PieceType a_PieceType = Piece::PieceType::none, const bool is_Black = false);
 	~Case();
 
-	const int GetHighlight() { return m_Highlight; }
+	const bool GetHighlight() { return m_Highlight; }
 	SDL_Rect& GetRect() { return gCase; }
 	std::shared_ptr<Piece>& GetPiece() { return gPiece; }
 	void SetHighlight(bool IsHighlight) { m_Highlight = IsHighlight; }
