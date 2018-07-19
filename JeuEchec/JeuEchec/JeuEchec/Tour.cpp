@@ -18,17 +18,17 @@ Tour::~Tour()
 }
 
 std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
-{	
+{
 	bool destination;
 	std::vector<std::shared_ptr<Vector2>>vec = {};
 
-	for (int w = i-1; w >= 0; w--)
+	for (int w = i - 1; w >= 0; w--)
 	{
 		if (cases[w][j]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(w, j, true));
 		}
-		else 
+		else
 		{
 			destination = cases[w][j]->GetPiece()->GetColor();
 
@@ -43,7 +43,7 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 			}
 		}
 	}
-	for (int w = i+1; w <= 7; w++)
+	for (int w = i + 1; w <= 7; w++)
 	{
 		if (cases[w][j]->GetPiece() == nullptr)
 		{
@@ -124,7 +124,10 @@ std::vector<std::shared_ptr<Vector2>> Tour::SpellTarget(int i, int j, const std:
 				destination = cases[w][z]->GetPiece()->GetColor();
 				if (isBlack != destination)
 				{
-					vec.push_back(std::make_shared<Vector2>(w, z, true));
+					if (cases[w][z]->GetPiece()->GetPieceType() == Pion)
+					{
+						vec.push_back(std::make_shared<Vector2>(w, z, true));
+					}
 				}
 			}
 		}
