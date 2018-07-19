@@ -29,8 +29,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i - 1][j]->GetPiece() != nullptr)
 		{
 			destination = cases[i - 1][j]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i - 1, j, true));
+			}
 		}
-		if (cases[i - 1][j]->GetPiece() == nullptr || myColor != destination)
+		else if (cases[i - 1][j]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i - 1, j, true));
 		}
@@ -41,8 +45,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i - 1][j - 1]->GetPiece() != nullptr)
 		{
 			destination = cases[i - 1][j - 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i - 1, j - 1, true));
+			}
 		}
-		if (cases[i - 1][j - 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i - 1][j - 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i - 1, j - 1, true));
 		}
@@ -50,11 +58,15 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 
 	if (i >= 1 && j <= 6)
 	{
-		if (cases[i - 1][j + 1]->GetPiece()->GetColor())
+		if (cases[i - 1][j + 1]->GetPiece() != nullptr)
 		{
 			destination = cases[i - 1][j + 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i - 1, j + 1, true));
+			}
 		}
-		if (cases[i - 1][j + 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i - 1][j + 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i - 1, j + 1, true));
 		}
@@ -65,8 +77,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i + 1][j]->GetPiece() != nullptr)
 		{
 			destination = cases[i + 1][j]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i + 1, j, true));
+			}
 		}
-		if (cases[i + 1][j]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i + 1][j]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i + 1, j, true));
 		}
@@ -77,8 +93,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i + 1][j - 1]->GetPiece() != nullptr)
 		{
 			destination = cases[i + 1][j - 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i + 1, j - 1, true));
+			}
 		}
-		if (cases[i + 1][j - 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i + 1][j - 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i + 1, j - 1, true));
 		}
@@ -88,9 +108,13 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 	{
 		if (cases[i + 1][j + 1]->GetPiece() != nullptr)
 		{
-			destination = cases[i + 1][j + 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				destination = cases[i + 1][j + 1]->GetPiece()->GetColor();
+				vec.push_back(std::make_shared<Vector2>(i + 1, j + 1, true));
+			}
 		}
-		if (cases[i + 1][j + 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i + 1][j + 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i + 1, j + 1, true));
 		}
@@ -101,8 +125,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i][j - 1]->GetPiece() != nullptr)
 		{
 			destination = cases[i][j - 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i, j - 1, true));
+			}
 		}
-		if (cases[i][j - 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i][j - 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i, j - 1, true));
 		}
@@ -113,8 +141,12 @@ std::vector<std::shared_ptr<Vector2>> Roi::Move(int i, int j, const std::vector<
 		if (cases[i][j + 1]->GetPiece() != nullptr)
 		{
 			destination = cases[i][j + 1]->GetPiece()->GetColor();
+			if (myColor != destination)
+			{
+				vec.push_back(std::make_shared<Vector2>(i, j + 1, true));
+			}
 		}
-		if (cases[i][j + 1]->GetPiece() == nullptr || myColor != destination)
+		if (cases[i][j + 1]->GetPiece() == nullptr)
 		{
 			vec.push_back(std::make_shared<Vector2>(i, j + 1, true));
 		}
@@ -147,5 +179,6 @@ std::vector<std::shared_ptr<Vector2>> Roi::SpellTarget(int i, int j, const std::
 
 void Roi::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
+	aCase->GetPiece()->HPGain(10);
 	Piece::CastSpell(aBoard, aCase);
 }

@@ -47,7 +47,9 @@ public:
 	const bool GetCanSpell() { return canSpell; }
 	const std::string GetSpellText() { return m_SpellText; }
 
-	void SetHP(int damage);
+	void SetDamage(int damage);
+	void HPGain(int hp);
+	void AttackGain(int boost);
 	void Attack(std::shared_ptr<Piece> piece);
 
 	virtual void CastSpell(const std::shared_ptr<Board>& board, const std::shared_ptr<Case>& aCase)

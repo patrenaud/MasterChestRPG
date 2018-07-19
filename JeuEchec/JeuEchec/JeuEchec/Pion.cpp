@@ -1,5 +1,6 @@
 #include "Pion.h"
 #include <SDL_image.h>
+#include <utility>
 #include "Case.h"
 
 Pion::Pion(bool IsBlack)
@@ -195,6 +196,5 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 
 void Pion::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
-	std::cout << "PionSpell" << std::endl;
 	Piece::CastSpell(aBoard, aCase);
 }

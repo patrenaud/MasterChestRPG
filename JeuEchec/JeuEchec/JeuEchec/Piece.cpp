@@ -21,7 +21,7 @@ void Piece::Render(SDL_Surface* gScreenSurface, SDL_Rect* Rect)
 	SDL_BlitSurface(m_Texture, NULL, gScreenSurface, Rect);
 }
 
-void Piece::SetHP(int damage)
+void Piece::SetDamage(int damage)
 {
 	if (damage - m_Stats.armor > 0)
 	{
@@ -29,7 +29,17 @@ void Piece::SetHP(int damage)
 	}
 }
 
+void Piece::HPGain(int hp)
+{
+	m_Stats.hp += hp;
+}
+
+void Piece::AttackGain(int boost)
+{
+	m_Stats.attack += boost;
+}
+
 void Piece::Attack(std::shared_ptr<Piece> piece)
 {
-	piece->SetHP(m_Stats.attack);
+	piece->SetDamage(m_Stats.attack);
 }
