@@ -34,11 +34,11 @@ public:
 	~Texts();
 
 	static std::vector<TextData> m_Texts;
-	static void Init(SDL_Window* window);
-	static void CreateTexts();
-	static void CreateRects();
-	static void CreateColors();
-	static void DrawTexts(SDL_Surface* surface);
+	static void Init(SDL_Window* window); // First function called
+	static void CreateTexts(); // Creates all strings used in texts
+	static void CreateRects(); // Creates all Rects used to position texts
+	static void CreateColors(); // Creates color for all string texts in Rects
+	static void DrawTexts(SDL_Surface* surface); // DrawTexts is used to print all on the screen
 
 private:
 

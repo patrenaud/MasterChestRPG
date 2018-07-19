@@ -15,9 +15,12 @@ public:
 	Board();
 	~Board();
 	void Render(SDL_Surface* gScreenSurface);
-	std::shared_ptr<Case> GetCase(int i, int j) {return gCase[i][j]; }	
-	const std::vector<std::vector<std::shared_ptr<Case>>> &GetCases() { return gCase; }
-	void SetHighlightFalse();
+
+	std::shared_ptr<Case> GetCase(int i, int j) {return gCase[i][j]; } // returns a specefic case
+
+	const std::vector<std::vector<std::shared_ptr<Case>>> &GetCases() { return gCase; }  // returns all cases
+
+	void SetHighlightFalse(); // Removes the Highlight for all cases
 
 private:
 

@@ -45,6 +45,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				return true;
 			}
 
+			// This contains all Powers that the player can make
 #pragma region---       ---Power Activatables
 			if (e.key.keysym.sym == SDLK_1)
 			{
@@ -56,9 +57,9 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				{
 					std::cout << "State: power 1" << std::endl;
 					m_ControlState = POWER1;
-					// 1. Trouver les pièces ayant un CastSpell de sa couleur à false
-					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
 
+					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+					// Player needs to have enough Mana
 					if (m_WhitePlayer->GetMana() >= 1 && m_WhitePlaying ||
 						m_BlackPlayer->GetMana() >= 1 && !m_WhitePlaying)
 					{
@@ -67,6 +68,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							for (int j = 0; j < cases[i].size(); j++)
 							{
 								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								// If conditions are met in any case of the board, cases are highlighted
 								if (piece != nullptr && piece->GetColor() == !m_WhitePlaying && !piece->GetCanSpell())
 								{
 									cases[i][j]->SetHighlight(true);
@@ -88,9 +90,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					std::cout << "State: power 2" << std::endl;
 					m_ControlState = POWER2;
 
-					// 1. Trouver les pièces ayant un CastSpell de sa couleur à false
 					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
-
+					// Player needs to have enough Mana
 					if (m_WhitePlayer->GetMana() >= 1 && m_WhitePlaying ||
 						m_BlackPlayer->GetMana() >= 1 && !m_WhitePlaying)
 					{
@@ -99,6 +100,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							for (int j = 0; j < cases[i].size(); j++)
 							{
 								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								// If conditions are met in any case of the board, cases are highlighted
 								if (piece != nullptr && piece->GetColor() == m_WhitePlaying && piece->GetArmor() > 0)
 								{
 									cases[i][j]->SetHighlight(true);
@@ -131,7 +133,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					std::cout << "State: power 4" << std::endl;
 					m_ControlState = POWER4;
 					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
-
+					// Player needs to have enough Mana
 					if (m_WhitePlayer->GetMana() >= 4 && m_WhitePlaying ||
 						m_BlackPlayer->GetMana() >= 4 && !m_WhitePlaying)
 					{
@@ -140,6 +142,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							for (int j = 0; j < cases[i].size(); j++)
 							{
 								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								// If conditions are met in any case of the board, cases are highlighted
 								if (piece != nullptr && piece->GetColor() == m_WhitePlaying && piece->GetHP() > 0)
 								{
 									cases[i][j]->SetHighlight(true);
@@ -162,7 +165,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					std::cout << "State: power 5" << std::endl;
 					m_ControlState = POWER5;
 					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
-
+					// Player needs to have enough Mana
 					if (m_WhitePlayer->GetMana() >= 9 && m_WhitePlaying ||
 						m_BlackPlayer->GetMana() >= 9 && !m_WhitePlaying)
 					{
@@ -171,6 +174,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							for (int j = 0; j < cases[i].size(); j++)
 							{
 								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								// If conditions are met in any case of the board, cases are highlighted
 								if (piece != nullptr && piece->GetColor() == !m_WhitePlaying && piece->GetHP() > 0)
 								{
 									cases[i][j]->SetHighlight(true);
@@ -199,7 +203,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						currentPiece->GetColor() == !m_WhitePlaying &&
 						currentPiece->GetCanSpell() == true)
 					{
-						
+						// Gets all targets available for spell
 						availableSpellDest = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->SpellTarget(Pos->GetJ(), Pos->GetI(), board->GetCases());
 
 						if (availableSpellDest.size() > 0)
@@ -207,6 +211,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 							_case = board->GetCase(Pos->GetJ(), Pos->GetI());
 							for (int i = 0; i < availableSpellDest.size(); i++)
 							{
+								// Highlights all possibilities
 								board->GetCase(availableSpellDest[i]->GetI(), availableSpellDest[i]->GetJ())->SetHighlight(true);
 							}
 							m_ControlState = SPELL_PHASE;
@@ -241,11 +246,13 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 			std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
 
+			// This whole condition shows all UI at runtime using ETextType enum
 			if (x > 0 && x < 800 && y < 800 && y > 0)
 			{
 				m_MouseSensor = board->GetCase(Pos->GetJ(), Pos->GetI());
 				if (m_MouseSensor->GetPiece())
 				{
+					// Shows all stats or information to UI (right of board)
 					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: " + std::to_string(m_MouseSensor->GetPiece()->GetHP());
 					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: " + std::to_string(m_MouseSensor->GetPiece()->GetDamage());
 					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: " + std::to_string(m_MouseSensor->GetPiece()->GetArmor());
@@ -257,6 +264,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				}
 				else
 				{
+					// if no piece is under Mouse hover, stats are hidden. (they would stay in place without this part)
 					Texts::m_Texts[Texts::ETextType::Hp].text = "HP: ";
 					Texts::m_Texts[Texts::ETextType::Damage].text = "Attack: ";
 					Texts::m_Texts[Texts::ETextType::Armor].text = "Armor: ";
@@ -268,7 +276,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 		if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
-			// CASE ATTACK
+			// When no spell is triggered, game works normally
 			if (m_ControlState == ATTACK_PHASE)
 			{
 				int x = 0;
@@ -294,7 +302,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					_case = nullptr;
 				}
 			}
-
+			// Spell Phase is when a unit has activated its spell
 			else if (m_ControlState == SPELL_PHASE)
 			{
 				int x = 0;
@@ -306,33 +314,33 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 				if (isHighlight == true)
 				{
+					// These 3 spells require to make change in cases selected.
 					_case->GetPiece()->CastSpell(board, board->GetCase(Pos->GetI(), Pos->GetJ()));
+					// Bishop destroys itself and the other
 					if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Fou)
 					{
 						_case->GetPiece() = nullptr;
 					}
+					// Peon swaps with other unit
 					else if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Pion)
 					{
 						std::swap(_case->GetPiece(), board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece());
 					}
+					// Knight needs to go to available case
 					else if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Cheval)
 					{
 						board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
 						_case->GetPiece() = nullptr;
 					}
 				}
-
 				m_ControlState = ATTACK_PHASE;
-
-
 				board->SetHighlightFalse();
+
 				_case = nullptr;
 			}
 
 			else if (m_ControlState == POWER1)
 			{
-				// Remettre le bool (CanSpell) de la piece sélectionnée à TRUE
-				// Mana cost = ?? -> Réduire le PlayerMana (SetPlayerMana) 
 				int x = 0;
 				int y = 0;
 				SDL_GetMouseState(&x, &y);
@@ -341,7 +349,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
 					currentPiece->SetCanSpell(true);
-
+					// Mana is decreased depending on player
 					if (m_WhitePlayer->GetMana() >= 1 && m_WhitePlaying)
 					{
 						m_WhitePlayer->SetMana(-1);
@@ -351,7 +359,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						m_BlackPlayer->SetMana(-1);
 					}
 				}
-
+				// After spell, all units highlighted are turned off and attack phase returns
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
 				for (int i = 0; i < cases.size(); i++)
 				{
@@ -372,7 +380,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
-					currentPiece->SetArmor(0);
+					currentPiece->SetArmor(0); // Armor of targeted unit is set to 0
+					// Mana is decreased depending on player
 					if (m_WhitePlayer->GetMana() >= 2 && m_WhitePlaying)
 					{
 						m_WhitePlayer->SetMana(-2);
@@ -382,7 +391,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						m_BlackPlayer->SetMana(-2);
 					}
 				}
-
+				// After spell, all units highlighted are turned off and attack phase returns
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
 				for (int i = 0; i < cases.size(); i++)
 				{
@@ -394,16 +403,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				m_ControlState = ATTACK_PHASE;
 			}
 
-			else if (m_ControlState == POWER3)
-			{
-				// Permet de jouer 2 fois
-				// Mana cost = ??
-			}
-
 			else if (m_ControlState == POWER4)
 			{
-				// Fait X dégâts à une pièce
-				// Mana cost = ??
 				int x = 0;
 				int y = 0;
 				SDL_GetMouseState(&x, &y);
@@ -411,7 +412,8 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
-					currentPiece->SetDamage(5);
+					currentPiece->SetDamage(5); // Does 5 dmg to enemy
+					// Mana is decreased depending on player
 					if (m_WhitePlayer->GetMana() >= 4 && m_WhitePlaying)
 					{
 						m_WhitePlayer->SetMana(-4);
@@ -426,7 +428,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						currentPiece = nullptr;
 					}
 				}
-
+				// After spell, all units highlighted are turned off and attack phase returns
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
 				for (int i = 0; i < cases.size(); i++)
 				{
@@ -440,8 +442,6 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 			else if (m_ControlState == POWER5)
 			{
-				// Fait X dégâts à toutes les pièces
-				// Mana cost = ??
 				int x = 0;
 				int y = 0;
 				SDL_GetMouseState(&x, &y);
@@ -449,10 +449,12 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
+					// Boosts stats of targeted ally
 					currentPiece->SetArmor(currentPiece->GetArmor() + 9);
 					currentPiece->AttackGain(9);
 					currentPiece->HPGain(9);
 
+					// Mana is decreased depending on player
 					if (m_WhitePlayer->GetMana() >= 9 && m_WhitePlaying)
 					{
 						m_WhitePlayer->SetMana(-9);
@@ -462,7 +464,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						m_BlackPlayer->SetMana(-9);
 					}
 				}
-
+				// After spell, all units highlighted are turned off and attack phase returns
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
 				for (int i = 0; i < cases.size(); i++)
 				{
@@ -509,7 +511,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 								board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
 								_case->GetPiece() = nullptr;
 							}
-							SwitchTurn();
+							SwitchTurn(board);
 						}
 					}
 					_case->Reset();
@@ -532,7 +534,8 @@ void Controls::SaveMove(std::shared_ptr<Case> _case, std::shared_ptr<Vector2> Po
 	SaveGame.close();
 }
 
-void Controls::SwitchTurn()
+// This is to Increase mana to players and to switch player's turn
+void Controls::SwitchTurn(const std::shared_ptr<Board>& board)
 {
 	if (m_WhitePlaying)
 	{
@@ -542,5 +545,16 @@ void Controls::SwitchTurn()
 	{
 		m_BlackPlayer->IncreaseMana();
 	}
+
+	const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+	for (int i = 0; i < cases.size(); i++)
+	{
+		for (int j = 0; j < cases[i].size(); j++)
+		{
+			std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+			// Need to check if all piece are gone and stop the game
+		}
+	}
+
 	m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
 }

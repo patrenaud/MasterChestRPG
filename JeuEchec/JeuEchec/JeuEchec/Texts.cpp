@@ -15,6 +15,7 @@ Texts::~Texts()
 {
 }
 
+// This is created first (INIT)
 void Texts::Init(SDL_Window* window)
 {
 	TTF_Init();
