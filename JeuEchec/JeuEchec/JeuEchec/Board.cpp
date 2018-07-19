@@ -5,6 +5,9 @@
 #include <memory>
 #include "PieceFactory.h"
 #include "Case.h"
+#include <random>
+
+
 
 Board::Board()
 {

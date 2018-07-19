@@ -5,6 +5,7 @@
 #include <vector>
 #include "Texts.h"
 #include "Player.h"
+#include <random>
 
 class Vector2;
 class Board;
@@ -53,5 +54,7 @@ private:
 
 	std::vector<std::shared_ptr<Vector2>> availableMoves = std::vector<std::shared_ptr<Vector2>>();
 	std::vector<std::shared_ptr<Vector2>> availableSpellDest = std::vector<std::shared_ptr<Vector2>>();
+
+	std::mt19937 rng;
 };
 
