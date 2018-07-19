@@ -17,9 +17,10 @@ public:
 	SDL_Rect& GetRect() { return gCase; }
 	std::shared_ptr<Piece>& GetPiece() { return gPiece; }
 	void SetHighlight(bool IsHighlight) { m_Highlight = IsHighlight; }
-	std::shared_ptr<Vector2> GetOrigin() { return std::make_shared<Vector2>(XPos, YPos); }	
+	std::shared_ptr<Vector2> GetOrigin() { return std::make_shared<Vector2>(XPos, YPos); }
+	const int GetX() { return XPos / 100; }
+	const int GetY() { return YPos / 100; }
 	void Render(SDL_Surface* gScreenSurface);
-
 	void Reset();
 	
 private:

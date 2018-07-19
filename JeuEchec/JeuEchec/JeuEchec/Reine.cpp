@@ -235,5 +235,6 @@ std::vector<std::shared_ptr<Vector2>> Reine::SpellTarget(int i, int j, const std
 
 void Reine::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
+	aCase->GetPiece()->AttackGain(10);
 	Piece::CastSpell(aBoard, aCase);
 }
