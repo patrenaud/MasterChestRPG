@@ -304,6 +304,15 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
 					currentPiece->SetCanSpell(true);
+
+					if (m_WhitePlayer->GetMana() >= 1 && m_WhitePlaying)
+					{
+						m_WhitePlayer->SetMana(-1);
+					}
+					else if (m_BlackPlayer->GetMana() >= 1 && !m_WhitePlaying)
+					{
+						m_BlackPlayer->SetMana(-1);
+					}
 				}
 
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
@@ -335,12 +344,25 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				// Mana cost = ??
 				int x = 0;
 				int y = 0;
-				SDL_GetMouseState(&y, &x);
+				SDL_GetMouseState(&x, &y);
 				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
 				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
 				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
 				{
-					currentPiece->SetHP(-3);
+					currentPiece->SetDamage(5);
+					if (m_WhitePlayer->GetMana() >= 4 && m_WhitePlaying)
+					{
+						m_WhitePlayer->SetMana(-4);
+					}
+					else if (m_BlackPlayer->GetMana() >= 4 && !m_WhitePlaying)
+					{
+						m_BlackPlayer->SetMana(-4);
+					}
+
+					if (currentPiece->GetHP() <= 0)
+					{
+						currentPiece = nullptr;
+					}
 				}
 
 				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
