@@ -22,7 +22,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 {
 	//Main loop flag
 	bool quit = false;
-
+	
 
 	//Event handler
 	SDL_Event e;
@@ -146,11 +146,12 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 						currentPiece->GetColor() == !m_WhitePlaying &&
 						currentPiece->GetCanSpell() == true)
 					{
-						_case = board->GetCase(Pos->GetJ(), Pos->GetI());
+						
 						availableSpellDest = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece()->SpellTarget(Pos->GetJ(), Pos->GetI(), board->GetCases());
 
 						if (availableSpellDest.size() > 0)
 						{
+							_case = board->GetCase(Pos->GetJ(), Pos->GetI());
 							for (int i = 0; i < availableSpellDest.size(); i++)
 							{
 								board->GetCase(availableSpellDest[i]->GetI(), availableSpellDest[i]->GetJ())->SetHighlight(true);
@@ -251,12 +252,24 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 				if (isHighlight == true)
 				{
-					_case->GetPiece()->CastSpell(board, _case);
+					_case->GetPiece()->CastSpell(board, board->GetCase(Pos->GetI(), Pos->GetJ()));
+					if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Fou)
+					{
+						_case->GetPiece() = nullptr;
+					}
+					else if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Pion)
+					{
+						std::swap(_case->GetPiece(), board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece());
+					}
+					else if (_case->GetPiece() != nullptr && _case->GetPiece()->GetPieceType() == Piece::Cheval)
+					{
+						board->GetCase(Pos->GetI(), Pos->GetJ())->GetPiece() = _case->GetPiece();
+						_case->GetPiece() = nullptr;
+					}
 				}
-				else
-				{
-					m_ControlState = ATTACK_PHASE;
-				}
+
+				m_ControlState = ATTACK_PHASE;
+
 
 				board->SetHighlightFalse();
 				_case = nullptr;

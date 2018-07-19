@@ -197,5 +197,95 @@ std::vector<std::shared_ptr<Vector2>> Cheval::SpellTarget(int i, int j, const st
 
 void Cheval::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
+	int y = aCase->GetX();
+	int x = aCase->GetY();
+
+	if (x >= 1 && aBoard->GetCase(x - 1, y)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x - 1, y)->GetPiece();
+		piece->SetDamage(5);
+		
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (x >= 1 && y >= 1 && aBoard->GetCase(x - 1, y - 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x - 1, y - 1)->GetPiece();
+		piece->SetDamage(5);
+
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (y >= 1 && aBoard->GetCase(x, y - 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x, y - 1)->GetPiece();
+		piece->SetDamage(5);
+
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (x <= 6 && y >= 1 && aBoard->GetCase(x + 1, y - 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x + 1, y - 1)->GetPiece();
+		piece->SetDamage(5);
+
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (x <= 6 && aBoard->GetCase(x + 1, y)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x + 1, y)->GetPiece();
+		piece->SetDamage(5);
+		
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (x <= 6 && y <= 6 && aBoard->GetCase(x + 1, y + 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x + 1, y + 1)->GetPiece();
+		piece->SetDamage(5);
+		
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (y >= 1 && aBoard->GetCase(x, y - 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x, y - 1)->GetPiece();
+		piece->SetDamage(5);
+
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
+
+	if (x >= 1 && y <= 6 && aBoard->GetCase(x - 1, y + 1)->GetPiece() != nullptr)
+	{
+		std::shared_ptr<Piece>& piece = aBoard->GetCase(x - 1, y + 1)->GetPiece();
+		piece->SetDamage(5);
+
+		if (piece->GetHP() <= 0)
+		{
+			piece = nullptr;
+		}
+	}
 	Piece::CastSpell(aBoard, aCase);
 }

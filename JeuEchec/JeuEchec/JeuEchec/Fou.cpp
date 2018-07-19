@@ -202,10 +202,11 @@ std::vector<std::shared_ptr<Vector2>> Fou::SpellTarget(int i, int j, const std::
 					vec.push_back(std::make_shared<Vector2>(i + w, j - w, true));
 					break;
 				}
-			}
-			else
-			{
-				break;
+
+				else
+				{
+					break;
+				}
 			}
 		}
 	}
@@ -215,5 +216,7 @@ std::vector<std::shared_ptr<Vector2>> Fou::SpellTarget(int i, int j, const std::
 
 void Fou::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
+	aCase->GetPiece() = nullptr;
+
 	Piece::CastSpell(aBoard, aCase);
 }
