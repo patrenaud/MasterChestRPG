@@ -3,11 +3,8 @@
 #include <vector>
 #include <SDL.h>
 
-
 class Piece;
 class Case;
-
-
 
 class Board
 {
@@ -31,6 +28,7 @@ private:
 	SDL_Surface* gPNGSurface = NULL;
 
 	std::vector<std::vector<std::shared_ptr<Case>>> gCase;
+
 
 };
 

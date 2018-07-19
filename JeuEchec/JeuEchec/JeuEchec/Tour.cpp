@@ -5,11 +5,15 @@
 Tour::Tour(bool IsBlack)
 	: Piece(IsBlack)
 {
+	//Texture de la piece
 	m_Texture = IsBlack ? IMG_Load("images/bTower.png") : IMG_Load("images/wTower.png");
+	//Type de la piece
 	Piece::m_Type = PieceType::Tour;
+	//Stats de la piece
 	m_Stats.hp = 42;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	//Description du spell de la piece
 	m_SpellText = "Sniper: Deals damage to any enemy on the map";
 }
 
@@ -22,6 +26,7 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 	bool destination;
 	std::vector<std::shared_ptr<Vector2>>vec = {};
 
+	//Ma Tour peut-elle aller vers le haut
 	for (int w = i - 1; w >= 0; w--)
 	{
 		if (cases[w][j]->GetPiece() == nullptr)
@@ -43,6 +48,8 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 			}
 		}
 	}
+
+	//Ma Tour peut-elle se déplacer vers le bas
 	for (int w = i + 1; w <= 7; w++)
 	{
 		if (cases[w][j]->GetPiece() == nullptr)
@@ -64,6 +71,8 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 			}
 		}
 	}
+
+	//Ma Tour peut-elle se déplacer vers la gauche
 	for (int w = j - 1; w >= 0; w--)
 	{
 		if (cases[i][w]->GetPiece() == nullptr)
@@ -85,6 +94,7 @@ std::vector<std::shared_ptr<Vector2>> Tour::Move(int i, int j, const std::vector
 			}
 		}
 	}
+	//Ma Tour peut-elle se déplacer vers la droite
 	for (int w = j + 1; w <= 7; w++)
 	{
 		if (cases[i][w]->GetPiece() == nullptr)
@@ -115,6 +125,7 @@ std::vector<std::shared_ptr<Vector2>> Tour::SpellTarget(int i, int j, const std:
 	std::vector<std::shared_ptr<Vector2>>vec = {};
 	bool destination;
 
+	//Trouve tout les pions de sa couleurs
 	for (int w = 0; w < 8; w++)
 	{
 		for (int z = 0; z < 8; z++)
@@ -138,6 +149,7 @@ std::vector<std::shared_ptr<Vector2>> Tour::SpellTarget(int i, int j, const std:
 
 void Tour::CastSpell(const std::shared_ptr<Board>& aBoard, const std::shared_ptr<Case>& aCase)
 {
+	//Fait du dommage a piece qui recoit le spell
 	aCase->GetPiece()->SetDamage(5);
 	if (aCase->GetPiece()->GetHP() <= 0)
 	{

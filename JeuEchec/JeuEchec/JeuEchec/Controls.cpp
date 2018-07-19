@@ -7,11 +7,15 @@
 #include <fstream>
 #include <string>
 
+
 Controls::Controls()
 	: m_ControlState(EControlState::ATTACK_PHASE)
 {
 	m_WhitePlayer = new Player{};
 	m_BlackPlayer = new Player{};
+
+	std::random_device rd;     // only used once to initialise (seed) engine
+	std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
 }
 
 Controls::~Controls()
@@ -112,15 +116,35 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			}
 			if (e.key.keysym.sym == SDLK_3)
 			{
-				if (m_ControlState == POWER3)
+				int damage;
+				std::uniform_int_distribution<int> uni(2, 4); // guaranteed unbiased
+				damage = uni(rng);
+				std::cout << "Damage: " << damage;
+				if (m_WhitePlayer->GetMana() >= 3 && m_WhitePlaying)
 				{
-					m_ControlState = ATTACK_PHASE;
+					m_WhitePlayer->SetMana(-3);
+					if (m_BlackPlayer->GetMana() - damage < 0)
+					{
+						m_BlackPlayer->SetMana(-m_BlackPlayer->GetMana());
+					}
+					else
+					{
+						m_BlackPlayer->SetMana(-damage);
+					}
 				}
-				else
+				else if (m_BlackPlayer->GetMana() >= 3 && !m_WhitePlaying)
 				{
-					std::cout << "State: power 3" << std::endl;
-					m_ControlState = POWER3;
+					m_BlackPlayer->SetMana(-3);
+					if (m_WhitePlayer->GetMana() - damage < 0)
+					{
+						m_WhitePlayer->SetMana(-m_WhitePlayer->GetMana());
+					}
+					else
+					{
+						m_WhitePlayer->SetMana(-damage);
+					}
 				}
+				m_ControlState = ATTACK_PHASE;
 			}
 			if (e.key.keysym.sym == SDLK_4)
 			{
@@ -401,6 +425,23 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 					}
 				}
 				m_ControlState = ATTACK_PHASE;
+			}
+
+			else if (m_ControlState == POWER3)
+			{
+				/*if (m_WhitePlayer->GetMana() >= 3 && m_WhitePlaying)
+				{
+					m_WhitePlayer->SetMana(-3);
+					m_BlackPlayer->SetMana(-3);
+				}
+				else if (m_BlackPlayer->GetMana() >= 3 && !m_WhitePlaying)
+				{
+					m_BlackPlayer->SetMana(-3);
+					m_WhitePlayer->SetMana(-3);
+				}
+				m_ControlState = ATTACK_PHASE;*/
+				// Permet de jouer 2 fois
+				// Mana cost = ??
 			}
 
 			else if (m_ControlState == POWER4)
