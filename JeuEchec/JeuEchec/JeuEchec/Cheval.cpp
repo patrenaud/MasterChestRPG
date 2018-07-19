@@ -11,9 +11,9 @@ Cheval::Cheval(bool IsBlack)
 	m_Texture = IsBlack ? IMG_Load("images/bCavalier.png") : IMG_Load("images/wCavalier.png");
 	Piece::m_Type = PieceType::Cheval;
 	//Stats de la piece
-	m_Stats.hp = 2;
+	m_Stats.hp = 5;
 	m_Stats.armor = 2;
-	m_Stats.attack = 2;
+	m_Stats.attack = 4;
 	//Description du spell de la piece
 	m_SpellText = "Stampede: Damages all enemy around the landing area (friendly or enemy)";
 }

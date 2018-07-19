@@ -588,14 +588,39 @@ void Controls::SwitchTurn(const std::shared_ptr<Board>& board)
 	}
 
 	const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+	
+	int whitePiece = 0;
+	int blackPiece = 0;
+
 	for (int i = 0; i < cases.size(); i++)
 	{
 		for (int j = 0; j < cases[i].size(); j++)
 		{
-			std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
-			// Need to check if all piece are gone and stop the game
+			if (cases[i][j]->GetPiece() != nullptr)
+			{
+				std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+				if (piece->GetColor() == true)
+				{
+					blackPiece += 1;
+				}
+				else if (piece->GetColor() == false)
+				{
+					whitePiece += 1;
+				}
+			}
 		}
 	}
 
-	m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
+	if (blackPiece = 0)
+	{
+		Texts::m_Texts[Texts::ETextType::PowerText].text = "White Wins";
+	}
+	else if (whitePiece = 0)
+	{
+		Texts::m_Texts[Texts::ETextType::PowerText].text = "Black Wins";
+	}
+	else
+	{ 
+		m_WhitePlaying = !m_WhitePlaying; // When a piece is dropped to another spot, the player's turn is done (bool)
+	}	
 }

@@ -11,9 +11,9 @@ Pion::Pion(bool IsBlack)
 	//Type de la piece
 	m_Type = PieceType::Pion;
 	//Stats de la piece
-	m_Stats.hp = 1;
-	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.hp = 5;
+	m_Stats.armor = 0;
+	m_Stats.attack = 3;
 	//Description du spell de la piece
 	m_SpellText = "Switcharoo: Swaps position with an adjacent unit (friendly or enemy)";
 }

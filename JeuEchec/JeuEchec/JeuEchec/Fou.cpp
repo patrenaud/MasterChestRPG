@@ -11,9 +11,9 @@ Fou::Fou(bool IsBlack)
 	//Type de la piece
 	Piece::m_Type = PieceType::Fou;
 	//Stats de la piece
-	m_Stats.hp = 3;
+	m_Stats.hp = 5;
 	m_Stats.armor = 1;
-	m_Stats.attack = 2;
+	m_Stats.attack = 5;
 	//Description du spell de la piece
 	m_SpellText = "Allahu Akbar!: Kills an enemy unit with yourself";
 }

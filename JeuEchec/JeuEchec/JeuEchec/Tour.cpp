@@ -10,9 +10,9 @@ Tour::Tour(bool IsBlack)
 	//Type de la piece
 	Piece::m_Type = PieceType::Tour;
 	//Stats de la piece
-	m_Stats.hp = 42;
+	m_Stats.hp = 10;
 	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.attack = 3;
 	//Description du spell de la piece
 	m_SpellText = "Sniper: Deals damage to any enemy on the map";
 }

@@ -11,9 +11,9 @@ Roi::Roi(bool IsBlack)
 	//Type de la piece
 	Piece::m_Type = PieceType::Roi;
 	//Stats de la piece
-	m_Stats.hp = 13;
-	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.hp = 6;
+	m_Stats.armor = 3;
+	m_Stats.attack = 6;
 	//Description du spell de la piece
 	m_SpellText = "Healer: Heals an ally to max health";
 }

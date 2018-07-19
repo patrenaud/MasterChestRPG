@@ -10,9 +10,9 @@ Reine::Reine(bool IsBlack)
 	//Type de la piece
 	Piece::m_Type = PieceType::Reine;
 	//Stats de la piece
-	m_Stats.hp = 4;
-	m_Stats.armor = 1;
-	m_Stats.attack = 1;
+	m_Stats.hp = 10;
+	m_Stats.armor = 3;
+	m_Stats.attack = 5;
 	//Description du spell de la piece
 	m_SpellText = "Boost morale: Raises an ally's attack power";
 }
