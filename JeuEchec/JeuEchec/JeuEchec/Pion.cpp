@@ -6,14 +6,17 @@
 Pion::Pion(bool IsBlack)
 	: Piece(IsBlack)
 {
+	//Texture de la piece
 	m_Texture = IsBlack ? IMG_Load("images/bPion.png") : IMG_Load("images/wPion.png");
+	//Type de la piece
 	m_Type = PieceType::Pion;
+	//Stats de la piece
 	m_Stats.hp = 1;
 	m_Stats.armor = 1;
 	m_Stats.attack = 1;
+	//Description du spell de la piece
 	m_SpellText = "Switcharoo: Swaps position with an adjacent unit (friendly or enemy)";
 }
-
 
 Pion::~Pion()
 {
@@ -21,9 +24,12 @@ Pion::~Pion()
 
 std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector<std::vector<std::shared_ptr<Case>>>& cases)
 {
-	std::vector<std::shared_ptr<Vector2>>vec = {};
+	//Pour savoir la couleur de la case destination(si isBlack == destination les pièces sont de la même couleur)
 	bool destination;
+	//Vector (contenant de tout destination possible) 
+	std::vector<std::shared_ptr<Vector2>>vec = {};
 
+	//Mon pion peut-il aller vers le haut
 	if (i >= 1)
 	{
 		if (cases[i - 1][j]->GetPiece() != nullptr)
@@ -36,6 +42,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers le haut et vers la gauche
 	if (i >= 1 && j >= 1)
 	{
 		if (cases[i - 1][j - 1]->GetPiece() != nullptr)
@@ -48,6 +55,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers le haut et vers la droite
 	if (i >= 1 && j <= 6)
 	{
 		if (cases[i - 1][j + 1]->GetPiece() != nullptr)
@@ -60,6 +68,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas
 	if (i <= 6)
 	{
 		if (cases[i + 1][j]->GetPiece() != nullptr)
@@ -72,6 +81,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas et vers la gauche
 	if (i <= 6 && j >= 1)
 	{
 		if (cases[i + 1][j - 1]->GetPiece() != nullptr)
@@ -84,6 +94,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas et vers la droite
 	if (i <= 6 && j <= 6)
 	{
 		if (cases[i + 1][j + 1]->GetPiece() != nullptr)
@@ -96,6 +107,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers la gauche
 	if (j >= 1)
 	{
 		if (cases[i][j - 1]->GetPiece() != nullptr)
@@ -108,6 +120,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::Move(int i, int j, const std::vector
 		}
 	}
 
+	//Mon pion peut-il aller vers la droite
 	if (j <= 6)
 	{
 		if (cases[i][j + 1]->GetPiece() != nullptr)
@@ -127,6 +140,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 {
 	std::vector<std::shared_ptr<Vector2>>vec = {};
 
+	//Mon pion peut-il aller vers le haut
 	if (i >= 1)
 	{
 		if (cases[i - 1][j]->GetPiece() != nullptr)
@@ -135,6 +149,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers le haut et vers la gauche
 	if (i >= 1 && j >= 1)
 	{
 		if (cases[i - 1][j - 1]->GetPiece() != nullptr)
@@ -143,6 +158,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers le haut et vers la droite
 	if (i >= 1 && j <= 6)
 	{
 		if (cases[i - 1][j + 1]->GetPiece() != nullptr)
@@ -151,6 +167,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas
 	if (i <= 6)
 	{
 		if (cases[i + 1][j]->GetPiece() != nullptr)
@@ -159,6 +176,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas et vers la gauche
 	if (i <= 6 && j >= 1)
 	{
 		if (cases[i + 1][j - 1]->GetPiece() != nullptr)
@@ -167,6 +185,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers le bas et vers la droite
 	if (i <= 6 && j <= 6)
 	{
 		if (cases[i + 1][j + 1]->GetPiece() != nullptr)
@@ -175,6 +194,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers la gauche
 	if (j >= 1)
 	{
 		if (cases[i][j - 1]->GetPiece() != nullptr)
@@ -183,6 +203,7 @@ std::vector<std::shared_ptr<Vector2>> Pion::SpellTarget(int i, int j, const std:
 		}
 	}
 
+	//Mon pion peut-il aller vers la droite
 	if (j <= 6)
 	{
 		if (cases[i][j + 1]->GetPiece() != nullptr)
