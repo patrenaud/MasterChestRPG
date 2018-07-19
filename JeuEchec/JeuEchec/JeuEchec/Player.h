@@ -13,11 +13,5 @@ public:
 
 private:
 	int m_Mana;	
-	void Spell1();
-	void Spell2();
-	void Spell3();
-	void Spell4();
-	void Spell5();
-
 };
 
