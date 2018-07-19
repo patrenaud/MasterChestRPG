@@ -44,6 +44,7 @@ public:
 	const int GetHP() { return m_Stats.hp; }
 	const int GetDamage() { return m_Stats.attack; }
 	const int GetArmor() { return m_Stats.armor; }
+	const void SetArmor(int a_Armor) { m_Stats.armor = a_Armor; }
 	const bool GetCanSpell() { return canSpell; }
 	const void SetCanSpell(bool a_CanSpell) { canSpell = a_CanSpell; }
 	const std::string GetSpellText() { return m_SpellText; }

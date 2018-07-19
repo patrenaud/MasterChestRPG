@@ -86,7 +86,26 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				else
 				{
 					std::cout << "State: power 2" << std::endl;
-					m_ControlState = POWER2;					
+					m_ControlState = POWER2;
+
+					// 1. Trouver les pièces ayant un CastSpell de sa couleur à false
+					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+
+					if (m_WhitePlayer->GetMana() >= 1 && m_WhitePlaying ||
+						m_BlackPlayer->GetMana() >= 1 && !m_WhitePlaying)
+					{
+						for (int i = 0; i < cases.size(); i++)
+						{
+							for (int j = 0; j < cases[i].size(); j++)
+							{
+								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								if (piece != nullptr && piece->GetColor() == m_WhitePlaying && piece->GetArmor() > 0)
+								{
+									cases[i][j]->SetHighlight(true);
+								}
+							}
+						}
+					}
 				}
 			}
 			if (e.key.keysym.sym == SDLK_3)
@@ -328,8 +347,33 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 
 			else if (m_ControlState == POWER2)
 			{
-				// Crée un Pion à sa place d'origine
-				// Mana cost = ??
+				int x = 0;
+				int y = 0;
+				SDL_GetMouseState(&x, &y);
+				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
+				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
+				{
+					currentPiece->SetArmor(0);
+					if (m_WhitePlayer->GetMana() >= 2 && m_WhitePlaying)
+					{
+						m_WhitePlayer->SetMana(-2);
+					}
+					else if (m_BlackPlayer->GetMana() >= 2 && !m_WhitePlaying)
+					{
+						m_BlackPlayer->SetMana(-2);
+					}
+				}
+
+				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+				for (int i = 0; i < cases.size(); i++)
+				{
+					for (int j = 0; j < cases[i].size(); j++)
+					{
+						cases[i][j]->SetHighlight(false);
+					}
+				}
+				m_ControlState = ATTACK_PHASE;
 			}
 
 			else if (m_ControlState == POWER3)
