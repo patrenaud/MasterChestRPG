@@ -86,8 +86,7 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				else
 				{
 					std::cout << "State: power 2" << std::endl;
-					m_ControlState = POWER2;
-
+					m_ControlState = POWER2;					
 				}
 			}
 			if (e.key.keysym.sym == SDLK_3)
@@ -112,6 +111,24 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 				{
 					std::cout << "State: power 4" << std::endl;
 					m_ControlState = POWER4;
+					const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+
+					if (m_WhitePlayer->GetMana() >= 4 && m_WhitePlaying ||
+						m_BlackPlayer->GetMana() >= 4 && !m_WhitePlaying)
+					{
+						for (int i = 0; i < cases.size(); i++)
+						{
+							for (int j = 0; j < cases[i].size(); j++)
+							{
+								std::shared_ptr<Piece> piece = cases[i][j]->GetPiece();
+								if (piece != nullptr && piece->GetColor() == m_WhitePlaying && piece->GetHP() > 0)
+								{
+									cases[i][j]->SetHighlight(true);
+								}
+							}
+						}
+					}
+
 				}
 			}
 
@@ -303,6 +320,25 @@ bool Controls::Update(const std::shared_ptr<Board>& board, SDL_Surface* screen)
 			{
 				// Fait X dégâts à une pièce
 				// Mana cost = ??
+				int x = 0;
+				int y = 0;
+				SDL_GetMouseState(&y, &x);
+				std::shared_ptr<Vector2> Pos = std::make_shared<Vector2>(x, y);
+				std::shared_ptr<Piece>& currentPiece = board->GetCase(Pos->GetJ(), Pos->GetI())->GetPiece();
+				if (board->GetCase(Pos->GetJ(), Pos->GetI())->GetHighlight())
+				{
+					currentPiece->SetHP(-3);
+				}
+
+				const std::vector<std::vector<std::shared_ptr<Case>>>& cases = board->GetCases();
+				for (int i = 0; i < cases.size(); i++)
+				{
+					for (int j = 0; j < cases[i].size(); j++)
+					{
+						cases[i][j]->SetHighlight(false);
+					}
+				}
+				m_ControlState = ATTACK_PHASE;
 			}
 
 			else if (m_ControlState == POWER5)
