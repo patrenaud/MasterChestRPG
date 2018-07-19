@@ -7,8 +7,10 @@ public:
 	Player();
 	~Player();
 
-	const int GetMana() { return m_Mana; }
-		
+	int GetMana() { return m_Mana; }
+	void SetMana(int Mana) { m_Mana += Mana; }
+	void IncreaseMana() { SetMana(1); }
+
 private:
 	int m_Mana;	
 	void Spell1();

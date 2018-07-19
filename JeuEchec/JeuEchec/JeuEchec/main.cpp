@@ -42,7 +42,7 @@ bool init()
 {
 	// This is for text Lib
 	Texts::Init(gWindow);
-	
+
 	//Initialization flag
 	bool success = true;
 
@@ -92,7 +92,7 @@ void close()
 }
 
 int main(int argc, char* args[])
-{	
+{
 	//Start up SDL and create window
 	if (!init())
 	{
@@ -108,7 +108,7 @@ int main(int argc, char* args[])
 
 		// on ouvre le fichier de Save
 		std::ifstream fichier("Save.txt", std::ios::in);
-		
+
 
 		//While application is running
 		while (!quit)
@@ -131,7 +131,7 @@ int main(int argc, char* args[])
 				controls = std::make_shared<Controls>();
 				remove("Save.txt");
 			}
-						
+
 			if (fichier.is_open())  // si l'ouverture a réussi
 			{
 				std::vector<std::vector<int>> StartMoves = std::vector<std::vector<int>>();
@@ -161,10 +161,10 @@ int main(int argc, char* args[])
 
 					// Ceci est pour render le board
 					board->Render(gScreenSurface);
-					
+
 					SDL_Delay(1000); // 1000 miliseconds between each moves in save game restart
 				}
-				controls->m_WhitePlaying = !(StartMoves.size() % 2); // This will make the next move after load game be the right player
+				controls->SetWhitePlaying(!(StartMoves.size() % 2)); // This will make the next move after load game be the right player
 			}
 		}
 	}

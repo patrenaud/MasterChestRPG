@@ -16,8 +16,7 @@ public:
 		Power = 11,
 		PowerText = 12,
 		Player1 = 15,
-		Player2 = 16
-
+		Player2 = 16		
 	};
 	struct TextData
 	{

@@ -45,7 +45,9 @@ public:
 	const int GetDamage() { return m_Stats.attack; }
 	const int GetArmor() { return m_Stats.armor; }
 	const bool GetCanSpell() { return canSpell; }
+	const void SetCanSpell(bool a_CanSpell) { canSpell = a_CanSpell; }
 	const std::string GetSpellText() { return m_SpellText; }
+
 
 	void SetHP(int damage);
 	void Attack(std::shared_ptr<Piece> piece);
