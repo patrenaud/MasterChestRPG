@@ -41,11 +41,11 @@ void Texts::DrawTexts(SDL_Surface* surface)
 // All Texts shown by data
 void Texts::CreateTexts()
 {
-	m_Texts.push_back(TextData("Player Power # 1: Second Breath = Reactivate skill for a unit"));
-	m_Texts.push_back(TextData("Player Power # 2: Shredder = Removes armor of an enemy unit"));
-	m_Texts.push_back(TextData("Player Power # 3: Zap! = Reduces other player's mana by 2 to 4 (random)"));
-	m_Texts.push_back(TextData("Player Power # 4: Fireball = Deals 5 damage to any enemy unit"));
-	m_Texts.push_back(TextData("Player Power # 5: Juggernaut = Makes ally unit gain 9 armor, 9 hp and 9 damage"));
+	m_Texts.push_back(TextData("Player Power # 1: (Cost: 1) Second Breath = Reactivate skill for a unit"));
+	m_Texts.push_back(TextData("Player Power # 2: (Cost: 2) Shredder = Removes armor of an enemy unit"));
+	m_Texts.push_back(TextData("Player Power # 3: (Cost: 3) Zap! = Reduces other player's mana by 2 to 4 (random)"));
+	m_Texts.push_back(TextData("Player Power # 4: (Cost: 4) Fireball = Deals 5 damage to any enemy unit"));
+	m_Texts.push_back(TextData("Player Power # 5: (Cost: 9) Juggernaut = Makes ally unit gain 9 armor, 9 hp and 9 damage"));
 	m_Texts.push_back(TextData("                  "));
 	m_Texts.push_back(TextData("______________________________"));
 	m_Texts.push_back(TextData("-----Unit Stats-----"));
